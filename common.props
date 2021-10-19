@@ -9,7 +9,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/DigniteSoft/dignite.wechat/</RepositoryUrl>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-
+    
     <!-- Include symbol files (*.pdb) in the built .nupkg -->
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
