@@ -28,6 +28,9 @@ namespace Dignite.Wechat.Mp
             {
                 options.MapCodeNamespace("Wechat.Mp", typeof(DigniteWechatMpResource));
             });
+
+            //添加微信Mp配置服务
+            context.Services.AddWechatMp();
         }
     }
 }

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Dignite.Wechat.Mp.WebApp
 {
+    /// <summary>
+    /// 用户生成JSAPI的签名
+    /// </summary>
     public class JsapiSignatureMiddleware
     {
         private readonly RequestDelegate _next;
