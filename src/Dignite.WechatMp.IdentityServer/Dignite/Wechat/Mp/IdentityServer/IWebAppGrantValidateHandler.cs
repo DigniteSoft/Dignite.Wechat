@@ -1,7 +1,7 @@
 ﻿
 using System.Threading.Tasks;
 
-namespace Dignite.Wechat.Mp.WebApp
+namespace Dignite.Wechat.Mp.IdentityServer
 {
     /// <summary>
     /// 在<see cref="WebAppGrantValidator.ValidateAsync"/>获取微信小程序用户的信息后，向本接口传递上下文信息，按项目需要定制自己的登陆逻辑。
