@@ -76,6 +76,9 @@ namespace Dignite.Wechat.Mp.IdentityServer
                     await context.Response.WriteAsync(response.StatusCode.ToString());                    
                 }
             }
+
+            await this._next(context);
+            return;
         }
     }
 }
