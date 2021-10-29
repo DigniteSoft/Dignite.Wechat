@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Volo.Abp;
+using Volo.Abp.DependencyInjection;
 using Volo.Abp.Settings;
 
 namespace Dignite.Wechat.Mp.IdentityServer
@@ -15,13 +16,13 @@ namespace Dignite.Wechat.Mp.IdentityServer
     /// <summary>
     /// 基于IdentityServer的登陆中间件
     /// </summary>
-    public class IdentityServerSignValidator:ISignInValidator
+    public class IdentityServerSignInValidator:ISignInValidator, ITransientDependency
     {
         private readonly ISettingProvider _settingProvider;
         private readonly IHttpClientFactory _clientFactory;
         private readonly IHttpContextAccessor _accessor;
 
-        public IdentityServerSignValidator(ISettingProvider settingProvider, IHttpClientFactory clientFactory, IHttpContextAccessor accessor)
+        public IdentityServerSignInValidator(ISettingProvider settingProvider, IHttpClientFactory clientFactory, IHttpContextAccessor accessor)
         {
             _settingProvider = settingProvider;
             _clientFactory = clientFactory;
