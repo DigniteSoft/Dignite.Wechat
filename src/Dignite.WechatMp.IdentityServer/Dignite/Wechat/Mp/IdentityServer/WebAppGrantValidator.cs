@@ -32,7 +32,7 @@ namespace Dignite.Wechat.Mp.IdentityServer
             try
             {
                 var httpContext = _httpContextAccessor.HttpContext;
-                var handler = httpContext.RequestServices.GetService<IWebAppGrantValidateHandler>();
+                var handler = httpContext.RequestServices.GetService<IWebAppGrantValidationHandler>();
 
 
                 if (handler == null)

@@ -8,9 +8,5 @@ namespace Dignite.Wechat.Mp.IdentityServer
         /// </summary>
         public const string GrantType = "wechat_webapp";
 
-        /// <summary>
-        /// 登陆地址
-        /// </summary>
-        public const string LoginPath = "/wechat/mp/webapp/login";
     }
 }

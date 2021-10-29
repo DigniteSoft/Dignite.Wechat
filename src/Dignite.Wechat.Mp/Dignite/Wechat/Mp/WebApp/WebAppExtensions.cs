@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 
 
 namespace Dignite.Wechat.Mp.WebApp
@@ -8,11 +7,21 @@ namespace Dignite.Wechat.Mp.WebApp
     {
 
         /// <summary>
+        /// 向中间件管道注册微信登陆中间件
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <returns></returns>
+        public static IApplicationBuilder UseWechatWebAppSignIn(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<SignInMiddleware>();
+        }
+
+        /// <summary>
         /// 向中间件管道注册用户网页授权中间件
         /// </summary>
         /// <param name="builder"></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseWebAppAuthorizationUrl(this IApplicationBuilder builder)
+        public static IApplicationBuilder UseWechatWebAppAuthorizationUrl(this IApplicationBuilder builder)
         {
             return builder.UseMiddleware<AuthorizationUrlMiddleware>();
         }
@@ -23,7 +32,7 @@ namespace Dignite.Wechat.Mp.WebApp
         /// </summary>
         /// <param name="builder"></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseWebAppJsapiSignature(this IApplicationBuilder builder)
+        public static IApplicationBuilder UseWechatWebAppJsapiSignature(this IApplicationBuilder builder)
         {
             return builder.UseMiddleware<JsapiSignatureMiddleware>();
         }
