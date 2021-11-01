@@ -17,7 +17,7 @@ namespace Dignite.Wechat.Mp.WebApp
         /// <summary>
         /// 登陆地址
         /// </summary>
-        public const string LoginPath = "/wechat/mp/webapp/signin";
+        public const string SignInPath = "/wechat/mp/webapp/signin";
 
         /// <summary>
         /// 获取jsapi加密签名的地址

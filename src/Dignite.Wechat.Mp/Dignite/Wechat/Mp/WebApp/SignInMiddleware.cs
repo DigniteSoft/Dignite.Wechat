@@ -26,7 +26,7 @@ namespace Dignite.Wechat.Mp.WebApp
             if (HttpMethods.IsPost(request.Method))
             {
                 //若当前请求不是获取微信网页授权的地址，则跳过处理，直接执行后续中间件
-                if (!WebAppConsts.LoginPath.Equals(request.Path, StringComparison.OrdinalIgnoreCase))
+                if (!WebAppConsts.SignInPath.Equals(request.Path, StringComparison.OrdinalIgnoreCase))
                 {
                     await this._next(context);
                     return;
