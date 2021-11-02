@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Volo.Abp;
@@ -47,7 +48,11 @@ namespace Dignite.Wechat.Mp.IdentityServer
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
 
-            var response = await client.PostAsync("https://localhost:44393/connect/token", content, _accessor.HttpContext.RequestAborted);
+            var response = await client.PostAsync(
+                GetAbsoluteUri(_accessor.HttpContext.Request)+"/connect/token", 
+                content, 
+                _accessor.HttpContext.RequestAborted
+                );
             if (response.IsSuccessStatusCode)
             {
                 var msg = await response.Content.ReadAsStringAsync();
@@ -61,6 +66,15 @@ namespace Dignite.Wechat.Mp.IdentityServer
             {
                 throw new AbpException(response.StatusCode.ToString());
             }
+        }
+
+        private string GetAbsoluteUri(HttpRequest request)
+        {
+            return new StringBuilder()
+                .Append(request.Scheme)
+                .Append("://")
+                .Append(request.Host.Value)
+                .ToString();
         }
 
     }
