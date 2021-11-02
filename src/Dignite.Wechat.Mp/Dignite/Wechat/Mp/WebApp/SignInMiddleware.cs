@@ -38,12 +38,12 @@ namespace Dignite.Wechat.Mp.WebApp
                 var result = await _grantValidationSender.ValidateAsync(code, state);
 
                 await context.Response.WriteAsync(JsonSerializer.Serialize(result));
-
-
             }
-
-            await this._next(context);
-            return;
+            else
+            {
+                await this._next(context);
+                return;
+            }
         }
     }
 }
