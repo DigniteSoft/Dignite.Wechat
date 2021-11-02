@@ -2,6 +2,7 @@
 using Dignite.Wechat.Mp.WebApp;
 using IdentityServer4.ResponseHandling;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -17,7 +18,7 @@ namespace Dignite.Wechat.Mp.IdentityServer
     /// <summary>
     /// 基于IdentityServer的登陆中间件
     /// </summary>
-    public class IdentityServerSignInValidator:ISignInValidator, ITransientDependency
+    public class IdentityServerSignInValidator : ISignInValidator, ITransientDependency
     {
         private readonly ISettingProvider _settingProvider;
         private readonly IHttpClientFactory _clientFactory;
@@ -47,19 +48,19 @@ namespace Dignite.Wechat.Mp.IdentityServer
                 });
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
-
+            var url = GetAbsoluteUri(_accessor.HttpContext.Request);
             var response = await client.PostAsync(
-                GetAbsoluteUri(_accessor.HttpContext.Request)+"/connect/token", 
-                content, 
+                url + "/connect/token",
+                content,
                 _accessor.HttpContext.RequestAborted
                 );
             if (response.IsSuccessStatusCode)
             {
                 var msg = await response.Content.ReadAsStringAsync();
-                var tr = JsonSerializer.Deserialize<TokenResponse>(msg);
+                var tr = JsonConvert.DeserializeObject<Dictionary<string, string>>(msg);
                 return new SignInValidationResult()
                 {
-                    AccessToken = tr.AccessToken
+                    AccessToken = tr["access_token"]
                 };
             }
             else
@@ -76,6 +77,5 @@ namespace Dignite.Wechat.Mp.IdentityServer
                 .Append(request.Host.Value)
                 .ToString();
         }
-
     }
 }
