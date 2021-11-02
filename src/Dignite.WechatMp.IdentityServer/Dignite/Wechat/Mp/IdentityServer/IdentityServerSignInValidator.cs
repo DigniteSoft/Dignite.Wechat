@@ -57,11 +57,8 @@ namespace Dignite.Wechat.Mp.IdentityServer
             if (response.IsSuccessStatusCode)
             {
                 var msg = await response.Content.ReadAsStringAsync();
-                var tr = JsonConvert.DeserializeObject<Dictionary<string, string>>(msg);
-                return new SignInValidationResult()
-                {
-                    AccessToken = tr["access_token"]
-                };
+                var validationResult = JsonConvert.DeserializeObject<SignInValidationResult>(msg);
+                return validationResult;
             }
             else
             {
