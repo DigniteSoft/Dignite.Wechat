@@ -1,5 +1,5 @@
 ﻿
-namespace Dignite.Wechat.Mp.IdentityServer
+namespace Dignite.Wechat.Mp.WebApp
 {
     public static class WechatMpIdentityServerErrorCodes
     {

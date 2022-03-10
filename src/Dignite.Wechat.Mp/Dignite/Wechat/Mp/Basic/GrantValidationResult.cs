@@ -2,9 +2,9 @@
 
 using Newtonsoft.Json;
 
-namespace Dignite.Wechat.Mp.WebApp
+namespace Dignite.Wechat.Mp.Basic
 {
-    public class SignInValidationResult
+    public class GrantValidationResult
     {
         /// <summary>
         /// 

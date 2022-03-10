@@ -25,8 +25,8 @@ public override void OnApplicationInitialization(ApplicationInitializationContex
 {
     ...
     
-    //微信网页授权登陆
-    app.UseWebAppAuthorizationUrl();
+    //配置微信公众号登陆、微信小程序登陆等中间件
+    app.UseWechatMp();
 
     ...
 }

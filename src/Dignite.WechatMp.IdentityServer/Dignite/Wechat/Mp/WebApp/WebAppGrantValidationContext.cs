@@ -2,7 +2,7 @@
 using Dignite.Wechat.Mp.WebApp;
 using Microsoft.AspNetCore.Http;
 
-namespace Dignite.Wechat.Mp.IdentityServer
+namespace Dignite.Wechat.Mp.WebApp
 {
     /// <summary>
     /// 授权验证的上下文信息

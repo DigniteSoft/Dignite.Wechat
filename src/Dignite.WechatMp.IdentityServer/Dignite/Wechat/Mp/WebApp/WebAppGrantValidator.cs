@@ -1,4 +1,4 @@
-﻿using Dignite.Wechat.Mp.WebApp;
+﻿using Dignite.Wechat.Mp.IdentityServer;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,7 +6,7 @@ using System;
 using System.Threading.Tasks;
 using Volo.Abp;
 
-namespace Dignite.Wechat.Mp.IdentityServer
+namespace Dignite.Wechat.Mp.WebApp
 {
     /// <summary>
     /// 微信公众号网页的用户授权验证；
@@ -25,7 +25,7 @@ namespace Dignite.Wechat.Mp.IdentityServer
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string GrantType => IdentityServerConsts.GrantType;
+        public string GrantType => IdentityServerConsts.WechatWebAppGrantType;
 
         public async Task ValidateAsync(ExtensionGrantValidationContext context)
         {

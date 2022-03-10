@@ -79,6 +79,9 @@ namespace Dignite.Wechat.Mp.WebApp
                     await RefreshTokenAsync(result);
                 }
             }
+            else { 
+                /* 在用户第一次登陆时，已通用code换取了token，这里的result不可能为null */
+            }
 
             return result;
         }
@@ -135,11 +138,11 @@ namespace Dignite.Wechat.Mp.WebApp
 
             //将获取到的 AccessTokenResult 添加到缓存中
             //根据 openid 从缓存中获取 AccessTokenResult
-            result.AccessTokenExpireTime = DateTime.Now.AddSeconds(result.expires_in);
+            result.AccessTokenExpireTime = DateTime.Now.AddSeconds(result.ExpiresIn);
             result.RefreshTokenExpireTime = DateTime.Now.AddDays(30);
-            await _accessTokenCache.SetAsync(string.Format(accessTokenCacheKey, result.openid), result, new DistributedCacheEntryOptions
+            await _accessTokenCache.SetAsync(string.Format(accessTokenCacheKey, result.OpenId), result, new DistributedCacheEntryOptions
             {
-                AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(result.expires_in)
+                AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(result.ExpiresIn)
             });
 
             return result;
@@ -149,8 +152,8 @@ namespace Dignite.Wechat.Mp.WebApp
         {
             var requestUrl = QueryHelpers.AddQueryString("https://api.weixin.qq.com/sns/userinfo", new Dictionary<string, string>
                 {
-                    { "access_token", accessToken.access_token },
-                    { "openid", accessToken.openid },
+                    { "access_token", accessToken.AccessToken },
+                    { "openid", accessToken.OpenId },
                     { "lang", Language.zh_CN.ToString("g") },
                 });
 
@@ -172,7 +175,7 @@ namespace Dignite.Wechat.Mp.WebApp
                 //未关注，无法得到详细信息
                 //这里的 content 可能为："{\"errcode\":40003,\"errmsg\":\"invalid openid\"}"
                 //todo：修改AuthencationUserInfo，继承自WechatResult，开发者通过errcode判断是否成功请求到数据；
-                //todo: 第二种方案，在第一次获取到用户信息后，存储到自己的服务器上，以名频繁获取微信上的用户信息。
+                //todo: 第二种方案，在第一次获取到用户信息后，存储到自己的服务器上，以免频繁获取微信上的用户信息。
 
                 return null;
             }
@@ -186,7 +189,7 @@ namespace Dignite.Wechat.Mp.WebApp
             {
                 { "appid", appId },
                 { "grant_type", "refresh_token" },
-                { "refresh_token", accessToken.refresh_token }
+                { "refresh_token", accessToken.RefreshToken }
             });
 
             var client = ClientFactory.CreateClient(MpConsts.HttpClientName);
@@ -206,11 +209,11 @@ namespace Dignite.Wechat.Mp.WebApp
 
             //将获取到的 AccessTokenResult 添加到缓存中
             //根据 openid 从缓存中获取 AccessTokenResult
-            accessToken.AccessTokenExpireTime = DateTime.Now.AddSeconds(result.expires_in);
-            accessToken.access_token = result.access_token;
-            await _accessTokenCache.SetAsync(string.Format(accessTokenCacheKey, result.openid), accessToken, new DistributedCacheEntryOptions
+            accessToken.AccessTokenExpireTime = DateTime.Now.AddSeconds(result.ExpiresIn);
+            accessToken.AccessToken = result.AccessToken;
+            await _accessTokenCache.SetAsync(string.Format(accessTokenCacheKey, result.OpenId), accessToken, new DistributedCacheEntryOptions
             {
-                AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(result.expires_in)
+                AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(result.ExpiresIn)
             });
 
         }
@@ -238,7 +241,7 @@ namespace Dignite.Wechat.Mp.WebApp
             var requestUrl = QueryHelpers.AddQueryString("https://api.weixin.qq.com/cgi-bin/ticket/getticket",
                  new Dictionary<string, string>
                 {
-                    { "access_token", accessToken.access_token },
+                    { "access_token", accessToken.AccessToken },
                     { "type", "jsapi" }
                 });
 

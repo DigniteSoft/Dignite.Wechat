@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
 
-namespace Dignite.Wechat.Mp.IdentityServer
+namespace Dignite.Wechat.Mp.WebApp
 {
     public class WebAppGrantValidationResult : WechatResult
     {

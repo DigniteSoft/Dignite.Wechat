@@ -35,7 +35,7 @@ namespace Dignite.Wechat.Mp.Basic
                 await _accessTokenCache.SetAsync(accessTokenCacheKey, token,
                     new DistributedCacheEntryOptions
                     {
-                        AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(token.expires_in)
+                        AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(token.ExpiresIn)
                     });
             }
 

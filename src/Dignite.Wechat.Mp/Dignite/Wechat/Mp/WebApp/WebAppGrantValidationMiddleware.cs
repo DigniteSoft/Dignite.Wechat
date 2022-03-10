@@ -8,12 +8,12 @@ namespace Dignite.Wechat.Mp.WebApp
     /// <summary>
     /// 基于IdentityServer的登陆中间件
     /// </summary>
-    public class SignInMiddleware
+    public class WebAppGrantValidationMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ISignInValidator _grantValidationSender;
+        private readonly IWebAppGrantValidationSender _grantValidationSender;
 
-        public SignInMiddleware(RequestDelegate next, ISignInValidator grantValidationSender)
+        public WebAppGrantValidationMiddleware(RequestDelegate next, IWebAppGrantValidationSender grantValidationSender)
         {
             _next = next;
             _grantValidationSender = grantValidationSender;
@@ -32,8 +32,8 @@ namespace Dignite.Wechat.Mp.WebApp
                     return;
                 }
 
-                var state = request.Form["state"];
-                var code = request.Form["code"];
+                var state = request.Query["state"];
+                var code = request.Query["code"];
 
                 var result = await _grantValidationSender.ValidateAsync(code, state);
 

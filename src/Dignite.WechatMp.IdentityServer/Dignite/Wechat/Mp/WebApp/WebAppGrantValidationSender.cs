@@ -1,39 +1,38 @@
-﻿using Dignite.Wechat.Mp.IdentityServer.Settings;
-using Dignite.Wechat.Mp.WebApp;
-using IdentityServer4.ResponseHandling;
+﻿using Dignite.Wechat.Mp.Basic;
+using Dignite.Wechat.Mp.IdentityServer;
+using Dignite.Wechat.Mp.IdentityServer.Settings;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Settings;
 
-namespace Dignite.Wechat.Mp.IdentityServer
+namespace Dignite.Wechat.Mp.WebApp
 {
     /// <summary>
-    /// 基于IdentityServer的登陆中间件
+    /// 微信公众号程序在拿到code和state后，向IdentityServer发起登记请求
     /// </summary>
-    public class IdentityServerSignInValidator : ISignInValidator, ITransientDependency
+    public class WebAppGrantValidationSender : IWebAppGrantValidationSender, ITransientDependency
     {
         private readonly ISettingProvider _settingProvider;
         private readonly IHttpClientFactory _clientFactory;
         private readonly IHttpContextAccessor _accessor;
 
-        public IdentityServerSignInValidator(ISettingProvider settingProvider, IHttpClientFactory clientFactory, IHttpContextAccessor accessor)
+        public WebAppGrantValidationSender(ISettingProvider settingProvider, IHttpClientFactory clientFactory, IHttpContextAccessor accessor)
         {
             _settingProvider = settingProvider;
             _clientFactory = clientFactory;
             _accessor = accessor;
         }
 
-        public async Task<SignInValidationResult> ValidateAsync(string code, string state)
+        public async Task<GrantValidationResult> ValidateAsync(string code, string state)
         {
-            var grant_type = IdentityServerConsts.GrantType;
+            var grant_type = IdentityServerConsts.WechatWebAppGrantType;
             var client_id = await _settingProvider.GetOrNullAsync(IdentityServerSettings.ClientId);
             var client_secret = await _settingProvider.GetOrNullAsync(IdentityServerSettings.ClientSecret);
 
@@ -57,7 +56,7 @@ namespace Dignite.Wechat.Mp.IdentityServer
             if (response.IsSuccessStatusCode)
             {
                 var msg = await response.Content.ReadAsStringAsync();
-                var validationResult = JsonConvert.DeserializeObject<SignInValidationResult>(msg);
+                var validationResult = JsonConvert.DeserializeObject<GrantValidationResult>(msg);
                 return validationResult;
             }
             else

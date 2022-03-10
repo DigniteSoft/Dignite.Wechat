@@ -1,4 +1,6 @@
 ﻿using Dignite.Wechat.Mp.IdentityServer.Localization;
+using Dignite.Wechat.Mp.MiniProgram;
+using Dignite.Wechat.Mp.WebApp;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Localization;
 using Volo.Abp.Localization.ExceptionHandling;
@@ -18,6 +20,12 @@ namespace Dignite.Wechat.Mp.IdentityServer
             PreConfigure<IIdentityServerBuilder>(builder =>
             {
                 builder.AddExtensionGrantValidator<WebAppGrantValidator>();
+            });
+
+            //配置微信miniprogram授权登陆
+            PreConfigure<IIdentityServerBuilder>(builder =>
+            {
+                builder.AddExtensionGrantValidator<MiniprogramGrantValidator>();
             });
         }
 
