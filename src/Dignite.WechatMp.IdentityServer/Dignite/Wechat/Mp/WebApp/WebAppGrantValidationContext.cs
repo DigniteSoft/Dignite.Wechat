@@ -1,5 +1,4 @@
 ﻿
-using Dignite.Wechat.Mp.WebApp;
 using Microsoft.AspNetCore.Http;
 
 namespace Dignite.Wechat.Mp.WebApp
