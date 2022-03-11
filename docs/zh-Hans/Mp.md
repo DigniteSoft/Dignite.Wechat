@@ -38,9 +38,11 @@ public override void OnApplicationInitialization(ApplicationInitializationContex
 
 如果用户同意授权，页面将跳转至 callbackUrl?code=CODE&state=STATE。
 
-用 code 换取AccessToken信息后，
+用 code 换取AccessToken信息后，访问 WebAppGrantValidationMiddleware （内部跳转至connect/token）
 
 
 
-
+### IWebAppGrantValidationHandler
 用openId查询微信用户是否注册，如没有注册，拿token再获取用户资料并注册
+
+### IMiniProgramGrantValidateHandler
