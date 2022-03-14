@@ -44,3 +44,7 @@ public override void OnApplicationInitialization(ApplicationInitializationContex
 
 
 用openId查询微信用户是否注册，如没有注册，拿token再获取用户资料并注册
+
+
+微信小程序登录模块集成
+1、

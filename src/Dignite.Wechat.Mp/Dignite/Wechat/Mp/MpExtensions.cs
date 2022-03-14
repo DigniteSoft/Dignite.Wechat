@@ -28,7 +28,7 @@ namespace Dignite.Wechat.Mp
         /// <returns></returns>
         public static IApplicationBuilder UseWechatMp(this IApplicationBuilder builder)
         {
-            return builder.UseMiddleware<IMiniProgramGrantValidationSender>()
+            return builder.UseMiddleware<MiniProgramGrantValidationMiddleware>()
                 .UseMiddleware<WebAppGrantValidationMiddleware>()
                 .UseMiddleware<AuthorizationUrlMiddleware>()
                 .UseMiddleware<JsapiSignatureMiddleware>();

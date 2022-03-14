@@ -24,7 +24,7 @@ namespace Dignite.Wechat.Mp.MiniProgram
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty("UnionId")]
+        [JsonProperty("unionid")]
         public string UnionId { get; set; }
     }
 }

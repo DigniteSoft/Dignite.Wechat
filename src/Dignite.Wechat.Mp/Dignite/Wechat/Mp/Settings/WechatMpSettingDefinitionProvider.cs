@@ -20,7 +20,19 @@ namespace Dignite.Wechat.Mp.Settings
                     name:WechatMpSettings.Secret,
                     displayName:L("DigniteWechatMpSettings.MpSecret"),
                     isVisibleToClients:false,
-                    isEncrypted:false)
+                    isEncrypted:false),
+                new SettingDefinition(
+                    name:WechatMpSettings.MiniProgramAppId,
+                    displayName:L("WechatMpSettings.MiniProgramAppId"),
+                    isVisibleToClients:false,
+                    isEncrypted:false),
+
+                new SettingDefinition(
+                    name:WechatMpSettings.MiniProgramSecret,
+                    displayName:L("WechatMpSettings.MiniProgramSecret"),
+                    isVisibleToClients:false,
+                    isEncrypted:false),
+
             };
 
             context.Add(definitions);

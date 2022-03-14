@@ -12,6 +12,21 @@ namespace Dignite.Wechat.Mp.MiniProgram
     public class MiniProgramUserInfo
     {
         /// <summary>
+        /// 用戶UnionID
+        /// </summary>
+        [JsonProperty("unionid")]
+        public string UnionId
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// 用戶OpenID
+        /// </summary>
+        [JsonProperty("openid")]
+        public string OpenId { get; set; }
+
+        /// <summary>
         /// 用户昵称
         /// </summary>
         [JsonProperty("nickname")]

@@ -56,9 +56,9 @@ namespace Dignite.Wechat.Mp.MiniProgram
                 content,
                 _accessor.HttpContext.RequestAborted
                 );
+            var msg = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
             {
-                var msg = await response.Content.ReadAsStringAsync();
                 var validationResult = JsonConvert.DeserializeObject<GrantValidationResult>(msg);
                 return validationResult;
             }
