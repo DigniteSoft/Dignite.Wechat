@@ -64,7 +64,7 @@ namespace Dignite.Wechat.Mp.MiniProgram
             }
             else
             {
-                throw new AbpException(response.StatusCode.ToString());
+                throw new AbpException(msg);
             }
         }
 
