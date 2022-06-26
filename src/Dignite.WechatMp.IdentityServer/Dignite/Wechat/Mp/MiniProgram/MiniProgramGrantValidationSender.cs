@@ -6,6 +6,7 @@ using IdentityServer4.ResponseHandling;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Settings;
+using Volo.Abp.Users;
 
 namespace Dignite.Wechat.Mp.MiniProgram
 {
@@ -26,7 +28,7 @@ namespace Dignite.Wechat.Mp.MiniProgram
         private readonly IHttpClientFactory _clientFactory;
         private readonly IHttpContextAccessor _accessor;
 
-        public MiniProgramGrantValidationSender(ISettingProvider settingProvider, IHttpClientFactory clientFactory, IHttpContextAccessor accessor)
+        public MiniProgramGrantValidationSender( ISettingProvider settingProvider, IHttpClientFactory clientFactory, IHttpContextAccessor accessor)
         {
             _settingProvider = settingProvider;
             _clientFactory = clientFactory;
@@ -39,6 +41,7 @@ namespace Dignite.Wechat.Mp.MiniProgram
             var client_id = await _settingProvider.GetOrNullAsync(IdentityServerSettings.ClientId);
             var client_secret = await _settingProvider.GetOrNullAsync(IdentityServerSettings.ClientSecret);
 
+
             var client = _clientFactory.CreateClient(MpConsts.HttpClientName);
             HttpContent content = new FormUrlEncodedContent(new[]
             {
@@ -48,8 +51,18 @@ namespace Dignite.Wechat.Mp.MiniProgram
                     new KeyValuePair<string, string>("userInfo", userInfo),
                     new KeyValuePair<string, string>("code", code)
                 });
-
             content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+
+            /* 
+             * 在绑定已登陆账户时，需要将已登陆用户的TOKEN传递给 connect/token ，用于 IMiniProgramGrantValidateHandler 中获取当前用户
+            */
+            var requestToken = _accessor.HttpContext.Request.Headers["authorization"];
+            if (requestToken.Any())
+            {
+                var token = requestToken[0].Replace("Bearer ", "");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
+
             var url = GetAbsoluteUri(_accessor.HttpContext.Request);
             var response = await client.PostAsync(
                 url + "/connect/token",

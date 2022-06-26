@@ -61,7 +61,11 @@ namespace Dignite.Wechat.Mp.MiniProgram
                 }
                 else
                 {
-                    new GrantValidationResult(TokenRequestErrors.InvalidGrant);
+                    context.Result = new GrantValidationResult()
+                    {
+                        IsError = true,
+                        Error = "未绑定一个用户，请跳转到账号密码登陆页面！"
+                    };
                 }
             }
             catch (Exception ex)

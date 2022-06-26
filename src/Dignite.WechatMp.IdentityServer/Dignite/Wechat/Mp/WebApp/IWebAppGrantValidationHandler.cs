@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Dignite.Wechat.Mp.WebApp
 {
     /// <summary>
-    /// 在<see cref="WebAppGrantValidator.ValidateAsync"/>获取微信小程序用户的信息后，向本接口传递上下文信息，按项目需要定制自己的登陆逻辑。
+    /// 在<see cref="WebAppGrantValidator.ValidateAsync"/>获取微信公众号用户的信息后，向本接口传递上下文信息，按项目需要定制自己的登陆逻辑。
     /// </summary>
     public interface IWebAppGrantValidationHandler
     {
