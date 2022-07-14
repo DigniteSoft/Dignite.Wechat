@@ -79,9 +79,9 @@ namespace Dignite.Wechat.Mp.MiniProgram
             var client = ClientFactory.CreateClient(MpConsts.HttpClientName);
             var response = await client.GetAsync(requestUrl);
             var msg = await response.Content.ReadAsStringAsync();
-            Log.Information($"GetAccessTokenFromApiAsync-Result:{msg}");
+            //Log.Information($"GetAccessTokenFromApiAsync-Result:{msg}");
             var result = Newtonsoft.Json.JsonConvert.DeserializeObject<AccessTokenResult>(msg);
-            Log.Information($"GetAccessTokenFromApiAsync-Obj-{Newtonsoft.Json.JsonConvert.SerializeObject(result)}");
+            //Log.Information($"GetAccessTokenFromApiAsync-Obj-{Newtonsoft.Json.JsonConvert.SerializeObject(result)}");
             return result;
         }
 
@@ -89,8 +89,8 @@ namespace Dignite.Wechat.Mp.MiniProgram
         public async Task<MiniProgramSessionResult> GetSessionTokenAsync(string code)
         {
             Log.Information($"Start-GetSessionTokenAsync:{code}");
-            var token = await GetAccessTokenAsync();
-            Log.Information($"accessToken:{ token?.AccessToken}");
+            //var token = await GetAccessTokenAsync();
+            //Log.Information($"accessToken:{ token?.AccessToken}");
             var appId = await SettingProvider.GetOrNullAsync(WechatMpSettings.MiniProgramAppId);
             var secret = await SettingProvider.GetOrNullAsync(WechatMpSettings.MiniProgramSecret);
             var requestUrl = QueryHelpers.AddQueryString("https://api.weixin.qq.com/sns/jscode2session", new Dictionary<string, string>
@@ -100,7 +100,7 @@ namespace Dignite.Wechat.Mp.MiniProgram
                 { "js_code", code },
                 { "grant_type", "authorization_code" }
             });
-            Log.Information($"jscode2session:{requestUrl}");
+            //Log.Information($"jscode2session:{requestUrl}");
             var client = ClientFactory.CreateClient(MpConsts.HttpClientName);
             var response = await client.GetAsync(requestUrl, _accessor.HttpContext.RequestAborted);
 
@@ -109,7 +109,7 @@ namespace Dignite.Wechat.Mp.MiniProgram
 
             var content = await response.Content.ReadAsStringAsync();
             var result = Newtonsoft.Json.JsonConvert.DeserializeObject<MiniProgramSessionResult>(content);
-            Log.Information($"jscode2session-Result:{content}");
+            //Log.Information($"jscode2session-Result:{content}");
             return result;
         }
 

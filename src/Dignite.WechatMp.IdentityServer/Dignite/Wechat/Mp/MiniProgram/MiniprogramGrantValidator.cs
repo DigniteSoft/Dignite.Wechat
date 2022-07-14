@@ -44,7 +44,7 @@ namespace Dignite.Wechat.Mp.MiniProgram
                 var sessionResult = await _apiService.GetSessionTokenAsync(code);
                 userInfo.OpenId = sessionResult?.OpenId;
                 userInfo.UnionId = sessionResult?.UnionId;
-                Log.Information($"userInfo:{Newtonsoft.Json.JsonConvert.SerializeObject(userInfo)}");
+                //Log.Information($"userInfo:{Newtonsoft.Json.JsonConvert.SerializeObject(userInfo)}");
                 var grantValidationResult = await handler.ExcuteAsync(
                     new MiniProgramGrantValidationContext(httpContext, sessionResult, userInfo)
                     );
